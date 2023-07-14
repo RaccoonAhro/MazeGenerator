@@ -8,11 +8,17 @@ GREEN = (114, 176, 131)
 ORANGE= (235, 171, 52)
 WINERED=(74, 1, 32)
 
-WIDTH=HEIGHT=10
 MARGIN=2
 maze_color=WINERED
 speed=240
-grid_length=grid_height=80
+
+custom_values=input('Do you want to input custom values? (Default values: 30px cell length; 20 cells long) (y/n)')
+if custom_values.lower()=='y':
+    WIDTH=HEIGHT=int(input('Please input the Height and Width of each cell: '))
+    grid_length=grid_height=int(input('Please input the size of the grid (length of one size): '))
+else:
+    WIDTH=HEIGHT=30
+    grid_length=grid_height=20
 
 pygame.init()
 
