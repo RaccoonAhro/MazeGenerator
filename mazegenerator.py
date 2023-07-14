@@ -5,6 +5,7 @@ import time
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (114, 176, 131)
+ORANGE= (235, 171, 52)
 WINERED=(74, 1, 32)
 
 WIDTH=HEIGHT=10
