@@ -7,12 +7,14 @@ WHITE = (255, 255, 255)
 GREEN = (114, 176, 131)
 ORANGE= (235, 171, 52)
 WINERED=(74, 1, 32)
+PINK=(199, 10, 89)
 
 MARGIN=2
 maze_color=WINERED
+solve_color=PINK
 speed=240
 
-custom_values=input('Do you want to input custom values? (Default values: 30px cell length; 20 cells long) (y/n)')
+custom_values=input('Do you want to input custom values? (Default values: 30px cell length; 20 cells long) (y/n) ')
 if custom_values.lower()=='y':
     WIDTH=HEIGHT=int(input('Please input the Height and Width of each cell: '))
     grid_length=grid_height=int(input('Please input the size of the grid (length of one size): '))
@@ -141,10 +143,10 @@ for y in range(0, grid_height):
 #space_visited is for if the space has been visited once
 #grid is for the possible movement choices at the generation of the maze
 #neighbors_visited is for when all the neighbors of a space have been visited
-
+solve_path=[]
 space_visited[0][0]=True
 screen.fill(WHITE)
-
+solve_found=False
 for i in range(0, grid_height):
     for j in range(0, grid_length):
         clock.tick(speed)
@@ -152,6 +154,12 @@ for i in range(0, grid_height):
             if done==True:
                 break
             while neighbors_visited[position_y][position_x]==True:
+                if position_x==grid_length-1 and position_y==grid_height-1:
+                    if neighbors_visited[grid_height-1][grid_length-1]==True:
+                        if not solve_found:
+                            for z in range(0, len(path)):
+                                solve_path.append(path[z])
+                            solve_found=True
                 if spaces_finished>=(grid_length*grid_height-1):
                     done=True
                     break
@@ -200,6 +208,59 @@ for i in range(0, grid_height):
             break
 
 print('Maze generation complete.')
+
+solve_grid=[]
+for y in range(0, grid_height):
+    empty_grid_temp=[]
+    for x in range(0, grid_length):
+        empty_grid_temp.append('')
+    solve_grid.append(empty_grid_temp)
+
+solve=input('Do you want the maze to be solved? (y/n) ')
+if solve.lower()=='y':
+    solve_grid[0][0]=True
+    for index in range(1, len(solve_path)):
+        clock.tick(20)
+        pygame.event.pump()
+        if solve_path[index] == 'up':
+            solve_grid[position_y][position_x]=True
+            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)), 2)
+            position_y-=1
+        elif solve_path[index] == 'down':
+            solve_grid[position_y][position_x]=True
+            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
+            position_y+=1
+        elif solve_path[index] == 'left':
+            solve_grid[position_y][position_x]=True
+            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
+            position_x-=1
+            
+        elif solve_path[index] == 'right':
+            solve_grid[position_y][position_x]=True
+            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
+            position_x+=1
+        
+        for row in range(grid_height):
+            for column in range(grid_length):
+                color=WHITE
+                if solve_grid[row][column]==True:
+                    color=solve_color
+                elif neighbors_visited[row][column]==True:
+                    color=maze_color
+                elif space_visited[row][column]==True:
+                    color=GREEN
+                if row==position_y and column==position_x:
+                    color=ORANGE
+                pygame.draw.rect(screen,
+                                color,
+                                [(MARGIN + WIDTH) * column + MARGIN,
+                                (MARGIN + HEIGHT) * row + MARGIN,
+                                WIDTH,
+                                HEIGHT])
+                pygame.event.pump()
+        pygame.display.flip()
+
+print('Maze solved.')
 
 running=True
 while running:
