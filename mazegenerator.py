@@ -149,7 +149,7 @@ screen.fill(WHITE)
 solve_found=False
 for i in range(0, grid_height):
     for j in range(0, grid_length):
-        clock.tick(speed)
+        #clock.tick(speed)
         if neighbors_visited[position_y][position_x]==True:
             if done==True:
                 break
@@ -165,25 +165,25 @@ for i in range(0, grid_height):
                     break
                 if path[-1]=='up':
                     path.pop()
-                    pygame.draw.line(screen, maze_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
+                    pygame.draw.line(screen, maze_color, (position_x*(WIDTH+MARGIN)+MARGIN, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN/2, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
                     position_y+=1
                     spaces_finished+=1
                     update_grid(position_x,position_y)
                 elif path[-1]=='down':
                     path.pop()
-                    pygame.draw.line(screen, maze_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)), 2)
+                    pygame.draw.line(screen, maze_color, (position_x*(WIDTH+MARGIN)+MARGIN, position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN/2, position_y*(HEIGHT+MARGIN)), 2)
                     position_y-=1
                     spaces_finished+=1
                     update_grid(position_x,position_y)
                 elif path[-1]=='left':
                     path.pop()
-                    pygame.draw.line(screen, maze_color, (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
+                    pygame.draw.line(screen, maze_color, (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)+MARGIN), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN/2), 2)
                     position_x+=1
                     spaces_finished+=1
                     update_grid(position_x,position_y)
                 elif path[-1]=='right':
                     path.pop()
-                    pygame.draw.line(screen, maze_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
+                    pygame.draw.line(screen, maze_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)+MARGIN), (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN/2), 2)
                     position_x-=1
                     spaces_finished+=1
                     update_grid(position_x,position_y)
@@ -220,24 +220,24 @@ solve=input('Do you want the maze to be solved? (y/n) ')
 if solve.lower()=='y':
     solve_grid[0][0]=True
     for index in range(1, len(solve_path)):
-        clock.tick(20)
+        #clock.tick(20)
         pygame.event.pump()
         if solve_path[index] == 'up':
             solve_grid[position_y][position_x]=True
-            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)), 2)
+            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN)+MARGIN, position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN/2, position_y*(HEIGHT+MARGIN)), 2)
             position_y-=1
         elif solve_path[index] == 'down':
             solve_grid[position_y][position_x]=True
-            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
+            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN)+MARGIN, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN/2, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
             position_y+=1
         elif solve_path[index] == 'left':
             solve_grid[position_y][position_x]=True
-            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
+            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)+MARGIN), (position_x*(WIDTH+MARGIN), position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN/2), 2)
             position_x-=1
             
         elif solve_path[index] == 'right':
             solve_grid[position_y][position_x]=True
-            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN), 2)
+            pygame.draw.line(screen, solve_color, (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)+MARGIN), (position_x*(WIDTH+MARGIN)+WIDTH+MARGIN, position_y*(HEIGHT+MARGIN)+HEIGHT+MARGIN/2), 2)
             position_x+=1
         
         for row in range(grid_height):
