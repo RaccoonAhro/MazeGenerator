@@ -14,10 +14,11 @@ maze_color=WINERED
 solve_color=PINK
 speed=240
 
-custom_values=input('Do you want to input custom values? (Default values: 30px cell length; 20 cells long) (y/n) ')
+custom_values=input('Do you want to input custom values? (Default values: 30px cell length; 20 cells long; square) (y/n) ')
 if custom_values.lower()=='y':
-    WIDTH=HEIGHT=int(input('Please input the Height and Width of each cell: '))
-    grid_length=grid_height=int(input('Please input the size of the grid (length of one size): '))
+    WIDTH=HEIGHT=int(input('Please input the Height/Width of each cell: '))
+    grid_height=int(input('Please input the height of the grid: '))
+    grid_length=int(input('Please input the length of the grid: '))
 else:
     WIDTH=HEIGHT=30
     grid_length=grid_height=20
@@ -37,8 +38,8 @@ path=['']
 
 grid=[]
 temp=[]
-for y in range(0, grid_length):
-    for x in range(0, grid_height):
+for y in range(0, grid_height):
+    for x in range(0, grid_length):
         temp.append(['U','D','L','R'])
         if x==0:
             temp[x].remove('L')
@@ -51,7 +52,7 @@ for y in range(0, grid_length):
     grid.append(temp)
     temp=[]
 
-WINDOW_SIZE= [len(grid)*(HEIGHT+MARGIN)+MARGIN,len(grid[0])*(WIDTH+MARGIN)+MARGIN]
+WINDOW_SIZE= [len(grid[0])*(WIDTH+MARGIN)+MARGIN,len(grid)*(HEIGHT+MARGIN)+MARGIN]
 screen = pygame.display.set_mode(WINDOW_SIZE)
 neighbors_visited=[]
 for y in range(0, grid_height):
