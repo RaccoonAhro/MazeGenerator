@@ -1,6 +1,8 @@
 import pygame
 import random
 import time
+import datetime from datetime
+import os
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -209,6 +211,13 @@ for i in range(0, grid_height):
             break
 
 print('Maze generation complete.')
+#current_path=os.path.dirname(__file__)
+#screenshot_path = os.path.join(current_path, "screenshots")
+#cd = datetime.now()
+#time_taken = cd.strftime("%Y%m%d_%H%M%S")
+#file_name = os.path.join(screenshot_path + "/" + time_taken + ".png")
+#pygame.image.save(screen, file_name)
+#print('Maze saved.')
 
 solve_grid=[]
 for y in range(0, grid_height):
